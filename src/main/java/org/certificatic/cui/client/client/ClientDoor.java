@@ -1,26 +1,27 @@
 package org.certificatic.cui.client.client;
 
-import org.certificatic.cui.client.impl.DoorImpl;
+import java.util.logging.Logger;
 import org.certificatic.cui.door.api.Door;
 
 public class ClientDoor {
-	
+    
 	static Door door;
-	
+        
+        private static final Logger LOG = Logger.getLogger(ClientDoor.class.getName());
+        
 	public static void main(String[] args) {
+            
+	    // door = new DoorImpl();
 		
-		door = new DoorImpl();
+	    // String name = "Tu nombre";
 		
-		String name = "Tu nombre";
+            // door.open(name);
 		
-		door.open(name);
-		
-		// door.close(name);
+            // door.close(name);
 		
 	    // door.alarm(name);
 		
 	}
-	
 
 	private static void openDoor(String name){
 		door.open(name);
@@ -34,6 +35,4 @@ public class ClientDoor {
 	private static void warning(String name){
 		door.open(name);
 	}
-
-
 }

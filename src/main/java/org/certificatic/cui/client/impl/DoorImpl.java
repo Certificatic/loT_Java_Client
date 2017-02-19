@@ -3,14 +3,12 @@ package org.certificatic.cui.client.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -24,30 +22,31 @@ public class DoorImpl implements Door {
 
 	public boolean open(String name) {
 		
-	LOG.info(" :::::: Abriendo puerta :::::: " + name);
+	LOG.log(Level.INFO, " :::::: Abriendo puerta :::::: {0}", name);
 		client(Door.OPEN);
-	LOG.info(" :::::: Puerta abierta :::::: " + name);
+	LOG.log(Level.INFO, " :::::: Puerta abierta :::::: ", name);
 	
 	  return true;
 	}
 
 	public boolean close(String name) {		
-		LOG.info(" ::::: Cerrando puerta :::: " + name);
+        
+        LOG.log(Level.INFO, " ::::: Cerrando puerta :::: {0}", name);
 		   client(Door.CLOSE);
-		   LOG.info(" ::::: Puerta cerrada  :::: " + name);
-		
-		return true;
+        LOG.log(Level.INFO, " ::::: Puerta cerrada  :::: ", name);
+        
+	  return true;
 	}
 	
-	public boolean alarm(String name) {	
-			LOG.info(" ::::: Poniendo Alarma :::: " + name);
-			client(Door.ALARM);
-			LOG.info(" ::::: Alarma iniciada :::: " + name);
-		return true;
+	public boolean alarm(String name) {
+            
+	LOG.log(Level.INFO, " ::::: Poniendo Alarma :::: {0}", name);
+		   client(Door.ALARM);
+        LOG.log(Level.INFO, " ::::: Alarma iniciada :::: {0}", name);
+	
+           return true;
 	}
 	
-        
-        
 	private void client(String args) {
 	
 		HttpClient client = new DefaultHttpClient();
@@ -69,9 +68,12 @@ public class DoorImpl implements Door {
 			System.out.println(line);
 		}
 		
-		} catch (Exception e) {
-			LOG.warning(":::::::::: FALLO :::::::::::");
-			LOG.log(Level.SEVERE, "Exception occur", e);
-		}	
+            } catch (IOException e) {
+		    LOG.warning(":::::::::: FALLO :::::::::::");
+		    LOG.log(Level.SEVERE, "IOException", e);
+	    } catch (UnsupportedOperationException e) {	
+                    LOG.warning(":::::::::: FALLO :::::::::::");
+                    LOG.log(Level.SEVERE, "UnsupportedOperationException", e);
+            }	
 	}
 }
